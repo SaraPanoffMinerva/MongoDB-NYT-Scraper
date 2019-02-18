@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(router);
 
+//var databaseUri= mongodb:<dbuser>:<dbpassword>@ds139295.mlab.com:39295/heroku_tlv2gfr5;
 var db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 //connect mongoose to our database
