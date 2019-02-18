@@ -1,24 +1,27 @@
 $(document).ready(function(){
 
     var articleContainer = $(".article-container");
-    $(document).on("click", ".btn.save", handleArtcleSave);
+    $(document).on("click", ".btn.save", handleArticleSave);
     $(document).on("click", ".scrape-new", handleArticleScrape);
 
     initPage();
 
     function initPage() {
+        console.log("this is working");
         articleContainer.empty();
-        $.get("/api/headlines?saved=false")
-        .then(function(data){
-            //if headllines, render them to page
-            if (data && data.length) {
-                renderArticles(data);
-            }
-            else {
-                //otherwise render a message that we have no articles for you
-                renderEmpty();
-            } 
-        });
+        //fix something here
+        // app.get("/api/headlines?saved=false")
+        // .then(function(data){
+        //     //if headllines, render them to page
+        //     if (data && data.length) {
+        //         renderArticles(data);
+        //     }
+        //     else {
+        //         //otherwise render a message that we have no articles for you
+        //         renderEmpty();
+        //     }
+        
+        // });
     }
 
     function renderArticles(articles){
@@ -42,7 +45,10 @@ $(document).ready(function(){
         "</a>",
         "</h3>",
         "</div>",
-        "<div class = 'panel-body'>"
+        "<div class = 'panel-body'>",
+        article.summary,
+        "</div>",
+        "</div>"
     ].join(""));
 
     panel.data("_id", article._id);
@@ -53,14 +59,14 @@ $(document).ready(function(){
     function renderEmpty(){
         //this function renders to the HTML
         var emptyAlert =
-        $(["<div class= 'alert alert-warnng text-center'>",
+        $(["<div class= 'alert alert-warning text-center'>",
         "<h4>No new articles for you.</h4>",
         "<div>",
         "<div class='panel panel-default'>",
-        "<div class='panel-heading tex-center'>",
+        "<div class='panel-heading text-center'>",
         "<h3>What Would You Like To Do?</h3>",
         "</div>",
-        "div class='panel-body text-center'>",
+        "<div class='panel-body text-center'>",
         "<h4><a class='scrape-new'>Try Scraping New Articles</a></h4>",
         "<h4><a href='/saved'>Go to Saved Articles</a></h4>",
         "</div>",
@@ -70,7 +76,7 @@ $(document).ready(function(){
     }
 
     function handleArticleSave() {
-        var articleToSave =(this).parnets(".panel").data();
+        var articleToSave =$(this).parents(".panel").data();
         articleToSave.saved = true;
     
        $.ajax({
@@ -82,6 +88,8 @@ $(document).ready(function(){
            if (data.ok){
                initPage();
            }
+
+           console.log("this is working");
        });
        } 
 
